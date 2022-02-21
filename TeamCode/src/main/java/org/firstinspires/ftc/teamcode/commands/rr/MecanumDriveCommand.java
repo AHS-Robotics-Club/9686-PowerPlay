@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.rr;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.rr.MecanumDriveSubsystem;
 
 import java.util.function.DoubleSupplier;
 
