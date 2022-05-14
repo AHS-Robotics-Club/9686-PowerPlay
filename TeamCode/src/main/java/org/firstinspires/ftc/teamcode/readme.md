@@ -1,5 +1,5 @@
 # README
-A document which details the (curently work-in-progress) naming conventions for Team 9686
+Contains Raider of the ARC's work-in-progress naming conventions for FTC
 
 # Naming Conventions
 ## Command-Based Stuff

@@ -1,17 +1,26 @@
-# Road Runner Quickstart
+# ARC Quickstart
 
-An example FTC project using [Road Runner](https://github.com/acmerobotics/road-runner). **Note:** Road Runner is in alpha and many of its APIs are incubating.
+A starter robot project for all of Raiders of the ARC's FTC teams, with useful libs included.
 
-## Installation
+# Install Instructions (TODO: Make more beginner-friendly)
 
-For more detailed instructions on getting Road Runner setup in your own project, see the [Road Runner README](https://github.com/acmerobotics/road-runner#core).
+1. Install Git and Android Studio
 
-1. Download or clone this repo with `git clone https://github.com/acmerobotics/road-runner-quickstart`.
+2. Fork this repository, and clone the fork into a directory
 
-1. Open the project in Android Studio and build `TeamCode` like any other `ftc_app` project.
+3. Add the parent AHS-Robotics-Club repo as an upstream
 
-1. If you have trouble with multidex, enable proguard by changing `useProguard` to `true` in `build.common.gradle`.
+``` git remote add upstream https://github.com/AHS-Robotics-Club/arc-quickstart.git ```
 
-## Documentation
+# Maintenance Instructions
 
-Check out the new [online quickstart documentation](https://acme-robotics.gitbook.io/road-runner/quickstart/introduction).
+- ALWAYS create a branch before making changes
+  - Give the branch a name similar to the action you are doing
+
+## How to pull changes from upstream
+```
+git fetch upstream # Gets changes from upstream
+git checkout main
+git merge upstream/main
+
+```
