@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 @Disabled // TODO: Remove this in order to show op-mode on phone
-@Autonomous(name = "TestServo")
+@Autonomous(name = "TestTwoServos")
 public class TestTwoServos extends CommandOpMode {
     private SimpleServo testServo_L;
     private SimpleServo testServo_R;
@@ -20,15 +20,18 @@ public class TestTwoServos extends CommandOpMode {
     public void initialize() {
         testServo_L = new SimpleServo(hardwareMap, "servoL", 0, 180);
         testServo_R = new SimpleServo(hardwareMap, "servoR", 0, 180);
-        // METHOD 1
+
         schedule(
                 new WaitUntilCommand(this::isStarted)
-                .andThen(
-                        new InstantCommand(() -> testServo_L.turnToAngle(180))
-                        .alongWith(
+                        .andThen(
+                                new InstantCommand(() -> testServo_L.turnToAngle(180))
+                        )
+        );
+        schedule(
+                new WaitUntilCommand(this::isStarted)
+                        .andThen(
                                 new InstantCommand(() -> testServo_R.turnToAngle(180))
                         )
-                )
         );
     }
 }
