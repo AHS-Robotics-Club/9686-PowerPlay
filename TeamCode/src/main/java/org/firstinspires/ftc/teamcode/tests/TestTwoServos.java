@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Disabled // TODO: Remove this in order to show op-mode on phone
 @Autonomous(name = "TestTwoServos")
 public class TestTwoServos extends CommandOpMode {
     private SimpleServo testServo_L;
