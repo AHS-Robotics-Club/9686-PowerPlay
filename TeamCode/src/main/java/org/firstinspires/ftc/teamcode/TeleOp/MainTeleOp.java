@@ -95,6 +95,10 @@ public class MainTeleOp extends CommandOpMode {
          */
 
         //DEBUG GROUP 3
+        gripper = new SimpleServo(hardwareMap, "gripper", 0, 180);
+        leftLift = new Motor(hardwareMap, "leftLift");
+        rightLift = new Motor(hardwareMap, "rightLift");
+
         gripperSubsystemClass = new GripperSubsystemClass(gripper);
         liftSubsystemClass = new LiftSubsystemClass(leftLift, rightLift);
         intakeSubsystem = new IntakeSubsystem(gripperSubsystemClass, liftSubsystemClass);
