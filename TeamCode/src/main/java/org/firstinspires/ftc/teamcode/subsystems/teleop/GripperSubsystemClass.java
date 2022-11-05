@@ -11,9 +11,11 @@ public class GripperSubsystemClass extends SubsystemBase {
     }
 
     public void close(){
-        gripper.turnToAngle(45);
+        if(gripper != null)
+            gripper.turnToAngle(45);
     }
     public void open(){
-        gripper.turnToAngle(0);
+        if(gripper != null)
+            gripper.turnToAngle(0);
     }
 }

@@ -4,27 +4,46 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 
 public class LiftSubsystemClass extends SubsystemBase {
-    private Motor leftLift, rightLift;
+    private Motor liftMotor;
 
-    public LiftSubsystemClass(Motor ll, Motor rl){
-        leftLift = ll;
-        rightLift = rl;
+    public LiftSubsystemClass(Motor lift){
+        liftMotor = lift;
     }
-
     public void setZero(){
-        leftLift.setTargetPosition(0);
-        rightLift.setTargetPosition(0);
+        if(liftMotor != null){
+            liftMotor.setTargetPosition(0);
+            while(!liftMotor.atTargetPosition()){
+                liftMotor.set(0.5);
+            }
+            liftMotor.stopMotor();
+        }
+
     }
     public void setLow(){
-        leftLift.setTargetPosition(500);
-        rightLift.setTargetPosition(500);
+        if(liftMotor != null) {
+            liftMotor.setTargetPosition(500);
+            while(!liftMotor.atTargetPosition()){
+                liftMotor.set(0.5);
+            }
+            liftMotor.stopMotor();
+        }
     }
     public void setMedium(){
-        leftLift.setTargetPosition(1000);
-        rightLift.setTargetPosition(1000);
+        if(liftMotor != null) {
+            liftMotor.setTargetPosition(1000);
+            while(!liftMotor.atTargetPosition()){
+                liftMotor.set(0.5);
+            }
+            liftMotor.stopMotor();
+        }
     }
     public void setHigh(){
-        leftLift.setTargetPosition(2000);
-        rightLift.setTargetPosition(2000);
+        if(liftMotor != null) {
+            liftMotor.setTargetPosition(2000);
+            while(!liftMotor.atTargetPosition()){
+                liftMotor.set(0.5);
+            }
+            liftMotor.stopMotor();
+        }
     }
 }

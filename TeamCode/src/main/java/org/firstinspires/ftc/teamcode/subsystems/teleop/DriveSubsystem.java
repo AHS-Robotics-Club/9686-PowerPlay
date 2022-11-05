@@ -20,6 +20,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Method which runs the subsystem
     public void drive(double strafeSpeed, double forwardSpeed, double turnSpeed) {
-        mecanumDrive.driveRobotCentric(-strafeSpeed, -forwardSpeed, -turnSpeed, true);
+        if(frontLeft != null && frontRight != null && backLeft != null && backRight != null)
+            mecanumDrive.driveRobotCentric(-strafeSpeed, -forwardSpeed, -turnSpeed, true);
     }
 }

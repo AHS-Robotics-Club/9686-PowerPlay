@@ -1,12 +1,18 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import android.os.Debug;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.commands.TeleOp.DriveCommand;
 import org.firstinspires.ftc.teamcode.commands.TeleOp.IntakeCommandManagerClass;
@@ -18,7 +24,7 @@ import org.firstinspires.ftc.teamcode.subsystems.teleop.GripperSubsystemClass;
 import org.firstinspires.ftc.teamcode.subsystems.teleop.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.teleop.LiftSubsystemClass;
 
-@TeleOp(name = "Main")
+@TeleOp(name = "MainTeleOp")
 public class MainTeleOp extends CommandOpMode {
     // MOTORS
     private Motor fL, fR, bL, bR;
@@ -55,49 +61,53 @@ public class MainTeleOp extends CommandOpMode {
     @Override
     public void initialize() {
         gPad1 = new GamepadEx(gamepad1);
+
         //DEBUG GROUP 1
-        /*
-        // Initializing Motors
-        fL = new Motor(hardwareMap, "frontLeft");
-        fR = new Motor(hardwareMap, "frontRight");
-        bL = new Motor(hardwareMap, "backLeft");
-        bR = new Motor(hardwareMap, "backRight");
-
-        // Initializing Extras
-        gPad1 = new GamepadEx(gamepad1);
-
-        // Initializing Commands and Subsystems
-        driveSubsystem = new DriveSubsystem(fL, fR, bL, bR, revIMU);
-        driveCommand = new DriveCommand(driveSubsystem, gPad1::getLeftX, gPad1::getLeftY, gPad1::getRightX, DRIVE_MULT);
-
-        // Motor Settings
-        fL.motor.setDirection(DcMotor.Direction.REVERSE);
-        fR.motor.setDirection(DcMotor.Direction.FORWARD);
-        bL.motor.setDirection(DcMotor.Direction.REVERSE);
-        bR.motor.setDirection(DcMotor.Direction.FORWARD);
-
-        fL.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fR.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bL.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bR.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        // Sets default command for drivetrain
-        register(driveSubsystem);
-        driveSubsystem.setDefaultCommand(driveCommand);
-        */
-
+        gripper = new SimpleServo(hardwareMap, "gripper", 0, 180);
+        gPad1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> gripper.rotateByAngle(45)));
         //DEBUG GROUP 2
-        /*
-        testMotor = new Motor(hardwareMap, "testMotor");
-        gPad1.getGamepadButton(GamepadKeys.Button.B).whenHeld(new InstantCommand(() -> testMotor.set(0.5)));
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        telemetry.addData("Button Press 'b'", 0);
-         */
+//        testMotor = new Motor(hardwareMap, "testMotor");
+//        gPad1.getGamepadButton(GamepadKeys.Button.B).whenHeld(new InstantCommand(() -> testMotor.set(0.5)));
+//        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+//        System.out.println("B has been pressed");
 
-        //DEBUG GROUP 3
+        //Drivetrain
+//        // Initializing Motors
+//        fL = new Motor(hardwareMap, "frontLeft");
+//        fR = new Motor(hardwareMap, "frontRight");
+//        bL = new Motor(hardwareMap, "backLeft");
+//        bR = new Motor(hardwareMap, "backRight");
+//
+//        // Initializing Extras
+//        gPad1 = new GamepadEx(gamepad1);
+//
+        // Initializing Commands and Subsystems
+//        driveSubsystem = new DriveSubsystem(fL, fR, bL, bR, revIMU);
+//        driveCommand = new DriveCommand(driveSubsystem, gPad1::getLeftX, gPad1::getLeftY, gPad1::getRightX, DRIVE_MULT);
+//
+//        // Motor Settings
+//        fL.motor.setDirection(DcMotor.Direction.REVERSE);
+//        fR.motor.setDirection(DcMotor.Direction.FORWARD);
+//        bL.motor.setDirection(DcMotor.Direction.REVERSE);
+//        bR.motor.setDirection(DcMotor.Direction.FORWARD);
+//
+//        fL.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        fR.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        bL.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        bR.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//
+//        // Sets default command for drivetrain
+//        register(driveSubsystem);
+//        driveSubsystem.setDefaultCommand(driveCommand);
+
+        // Lifts
+        /*
         gripper = new SimpleServo(hardwareMap, "gripper", 0, 180);
         leftLift = new Motor(hardwareMap, "leftLift");
         rightLift = new Motor(hardwareMap, "rightLift");
+
+        leftLift.setRunMode(Motor.RunMode.PositionControl);
+        rightLift.setRunMode(Motor.RunMode.PositionControl);
 
         gripperSubsystemClass = new GripperSubsystemClass(gripper);
         liftSubsystemClass = new LiftSubsystemClass(leftLift, rightLift);
@@ -108,6 +118,7 @@ public class MainTeleOp extends CommandOpMode {
         gPad1.getGamepadButton(GamepadKeys.Button.A).whenHeld(intakeRaiseCommand);
         gPad1.getGamepadButton(GamepadKeys.Button.A).whenPressed(intakeStepCommand);
         gPad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intakeReleaseCommand);
+        */
 
 
     }
