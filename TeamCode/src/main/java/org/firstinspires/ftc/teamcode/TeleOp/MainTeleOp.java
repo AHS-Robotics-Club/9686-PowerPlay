@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.RevIMU;
@@ -13,23 +14,21 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.TeleOp.DriveCommand;
-import org.firstinspires.ftc.teamcode.commands.TeleOp.IntakeCommandManagerClass;
-import org.firstinspires.ftc.teamcode.commands.TeleOp.IntakeRaiseCommand;
-import org.firstinspires.ftc.teamcode.commands.TeleOp.IntakeReleaseCommand;
-import org.firstinspires.ftc.teamcode.commands.TeleOp.IntakeStepCommand;
+import org.firstinspires.ftc.teamcode.commands.TeleOp.LiftStepCommand;
 import org.firstinspires.ftc.teamcode.subsystems.teleop.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.teleop.GripperSubsystemClass;
-import org.firstinspires.ftc.teamcode.subsystems.teleop.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.teleop.LiftSubsystemClass;
+import org.firstinspires.ftc.teamcode.subsystems.teleop.GripperSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.teleop.LiftSubsystem;
+
 
 @TeleOp(name = "MainTeleOp")
 public class MainTeleOp extends CommandOpMode {
     // MOTORS
     private Motor fL, fR, bL, bR;
     private Motor testMotor;
-    private Motor leftLift, rightLift;
+    private Motor liftMotor, rightLift;
 
     // SERVOS
     private SimpleServo gripper;
@@ -37,22 +36,18 @@ public class MainTeleOp extends CommandOpMode {
     // SUBSYSTEMS
     private DriveSubsystem driveSubsystem;
 
-    private IntakeSubsystem intakeSubsystem;
-    private LiftSubsystemClass liftSubsystemClass;
-    private GripperSubsystemClass gripperSubsystemClass;
+    private LiftSubsystem liftSubsystem;
+    private GripperSubsystem gripperSubsystem;
 
     // COMMANDS
     private DriveCommand driveCommand;
 
-    private IntakeCommandManagerClass intakeCommand;
-
-    private IntakeRaiseCommand intakeRaiseCommand;
-    private IntakeStepCommand intakeStepCommand;
-    private IntakeReleaseCommand intakeReleaseCommand;
+    private LiftStepCommand stepCommand;
 
     // EXTRAS
     private GamepadEx gPad1;
     private RevIMU revIMU;
+    private ElapsedTime deltaTime;
 
     // CONSTANTS
     private final double DRIVE_MULT = 1.0;
@@ -63,8 +58,9 @@ public class MainTeleOp extends CommandOpMode {
         gPad1 = new GamepadEx(gamepad1);
 
         //DEBUG GROUP 1
-        gripper = new SimpleServo(hardwareMap, "gripper", 0, 180);
-        gPad1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> gripper.rotateByAngle(45)));
+//        gripper = new SimpleServo(hardwareMap, "gripper", 0, 180);
+//        gPad1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> gripper.rotateByAngle(45)));
+//        gPad1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> gripper.rotateByAngle(-45)));
         //DEBUG GROUP 2
 //        testMotor = new Motor(hardwareMap, "testMotor");
 //        gPad1.getGamepadButton(GamepadKeys.Button.B).whenHeld(new InstantCommand(() -> testMotor.set(0.5)));
@@ -101,25 +97,28 @@ public class MainTeleOp extends CommandOpMode {
 //        driveSubsystem.setDefaultCommand(driveCommand);
 
         // Lifts
-        /*
+
         gripper = new SimpleServo(hardwareMap, "gripper", 0, 180);
-        leftLift = new Motor(hardwareMap, "leftLift");
-        rightLift = new Motor(hardwareMap, "rightLift");
+        liftMotor = new Motor(hardwareMap, "liftMotor");
+        deltaTime = new ElapsedTime();
 
-        leftLift.setRunMode(Motor.RunMode.PositionControl);
-        rightLift.setRunMode(Motor.RunMode.PositionControl);
+        //liftMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        gripperSubsystemClass = new GripperSubsystemClass(gripper);
-        liftSubsystemClass = new LiftSubsystemClass(leftLift, rightLift);
-        intakeSubsystem = new IntakeSubsystem(gripperSubsystemClass, liftSubsystemClass);
+        liftSubsystem = new LiftSubsystem(liftMotor);
+        gripperSubsystem = new GripperSubsystem(gripper);
 
-        intakeCommand = new IntakeCommandManagerClass(intakeSubsystem);
+        stepCommand = new LiftStepCommand(liftSubsystem, deltaTime);
+        deltaTime = new ElapsedTime();
 
-        gPad1.getGamepadButton(GamepadKeys.Button.A).whenHeld(intakeRaiseCommand);
-        gPad1.getGamepadButton(GamepadKeys.Button.A).whenPressed(intakeStepCommand);
-        gPad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intakeReleaseCommand);
+        /*
+        gPad1.getGamepadButton(GamepadKeys.Button.A).whenHeld(
+                new StartEndCommand(
+                        () -> raiseLift.andThen(releaseCone),
+                        () -> resetLift.andThen(lockCone)
+                )
+        );
         */
-
+        gPad1.getGamepadButton(GamepadKeys.Button.A).whenPressed(stepCommand);
 
     }
 }
