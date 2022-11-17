@@ -3,12 +3,13 @@ package org.firstinspires.ftc.teamcode.subsystems.teleop;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 
-public class LiftSubsystem extends SubsystemBase {
-    private Motor liftMotor;
-    private double motorConstant = 1;
-    private int level = 0;
+import org.firstinspires.ftc.teamcode.subsystems.teleop.LiftMotorGroup;
 
-    public LiftSubsystem(Motor lM){
+public class LiftSubsystem extends SubsystemBase {
+    private LiftMotorGroup liftMotor;
+    private double motorConstant = 1;
+
+    public LiftSubsystem(LiftMotorGroup lM){
         liftMotor = lM;
     }
 
@@ -29,7 +30,7 @@ public class LiftSubsystem extends SubsystemBase {
 
     public void runSlowReverse(){
         if(liftMotor != null)
-            liftMotor.set(-motorConstant / 5);
+            liftMotor.set(-motorConstant / 2);
     }
 
     public void runNormalReverse(){
