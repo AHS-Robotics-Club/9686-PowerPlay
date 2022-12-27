@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.TeleOp.Intake.Gripper;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.teleop.GripperSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.teleop.Intake.Gripper.GripperSubsystem;
 
 public class GripperLockCommand extends CommandBase {
     private GripperSubsystem gripper;

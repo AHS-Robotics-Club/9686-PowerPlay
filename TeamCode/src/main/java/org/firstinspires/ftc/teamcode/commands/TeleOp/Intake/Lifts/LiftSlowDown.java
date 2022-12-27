@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.teamcode.commands.TeleOp.Intake.Lifts;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.teleop.Intake.Lifts.LiftSubsystem;
 
-public class LiftDownCommand extends CommandBase {
-    private LiftSubsystem lift;
-
-    public LiftDownCommand(LiftSubsystem lS){
-        lift = lS;
+public class LiftSlowDown extends CommandBase {
+    private LiftSubsystem slowSlideBoob;
+    public LiftSlowDown(LiftSubsystem constructSlide){
+        slowSlideBoob = constructSlide;
     }
 
     @Override
     public void initialize() {
-        lift.runNormalReverse();
+        slowSlideBoob.runSlowReverse();
     }
 
     @Override
     public void end(boolean interrupted) {
-        lift.stopMotor();
+        slowSlideBoob.stopMotor();
     }
 }

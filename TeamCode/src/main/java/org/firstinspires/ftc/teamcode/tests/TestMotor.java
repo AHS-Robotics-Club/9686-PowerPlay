@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Config
-@Disabled // TODO: Remove this in order to show op-mode on phone
 @Autonomous(name = "TestMotor")
 public class TestMotor extends CommandOpMode {
 
@@ -25,7 +24,7 @@ public class TestMotor extends CommandOpMode {
     public void initialize() {
 
         // TODO: Initialize motor/subsystem
-        m = new Motor(hardwareMap, "exampleMotor");
+        m = new Motor(hardwareMap, "testMotor");
 
         schedule(
                 new WaitUntilCommand(this::isStarted)

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.teleop;
+package org.firstinspires.ftc.teamcode.subsystems.teleop.Intake.Gripper;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
@@ -14,6 +14,6 @@ public class GripperSubsystem extends SubsystemBase {
         gripper.turnToAngle(45);
     }
     public void release(){
-        gripper.turnToAngle(45);
+        gripper.turnToAngle(-45);
     }
 }

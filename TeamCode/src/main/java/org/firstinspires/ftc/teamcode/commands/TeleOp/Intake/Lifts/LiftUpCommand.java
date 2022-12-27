@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commands.TeleOp.Intake.Lifts;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.teleop.LiftSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.teleop.Intake.Lifts.LiftSubsystem;
 
 public class LiftUpCommand extends CommandBase {
     private LiftSubsystem lift;
